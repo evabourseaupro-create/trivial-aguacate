@@ -6,283 +6,112 @@
 <title>Trivial del Aguacate 🥑</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --green-dark: #1a7a2e;
-  --green-mid: #2ea832;
-  --green-light: #e8f5e9;
-  --orange: #f5a623;
-  --coral: #e85d26;
-  --bg: #fafaf7;
-  --card: #ffffff;
-  --text: #1a1a1a;
-  --muted: #6b7280;
-  --border: rgba(0,0,0,0.08);
-  --radius: 16px;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 24px 16px 60px;
-}
-
-.container { width: 100%; max-width: 560px; }
-
-.hero {
-  text-align: center;
-  padding: 40px 0 32px;
-}
-.hero-emoji { font-size: 64px; line-height: 1; display: block; margin-bottom: 16px; animation: bounce 2s ease-in-out infinite; }
-@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-.hero h1 {
-  font-family: 'Fraunces', serif;
-  font-size: 38px;
-  font-weight: 900;
-  background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 50%, var(--orange) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1.1;
-  margin-bottom: 10px;
-}
-.hero p { font-size: 15px; color: var(--muted); }
-
-.scoreboard {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 6px;
-  margin-bottom: 24px;
-}
-.score-pip {
-  border-radius: 12px;
-  padding: 10px 4px 8px;
-  text-align: center;
-  border: 2px solid transparent;
-  transition: all 0.3s;
-}
-.score-pip .pip-emoji { font-size: 18px; display: block; }
-.score-pip .pip-name { font-size: 9px; font-weight: 600; display: block; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.04em; }
-.score-pip .pip-check { font-size: 14px; display: block; margin-top: 2px; min-height: 18px; }
-.score-pip.earned { border-width: 2px; transform: scale(1.05); }
-
-.pip-0 { background: #e8f5e9; } .pip-0 .pip-name { color: #1b5e20; }
-.pip-1 { background: #f3e5f5; } .pip-1 .pip-name { color: #4a148c; }
-.pip-2 { background: #fff3e0; } .pip-2 .pip-name { color: #e65100; }
-.pip-3 { background: #e0f2f1; } .pip-3 .pip-name { color: #004d40; }
-.pip-4 { background: #fce4ec; } .pip-4 .pip-name { color: #880e4f; }
-.pip-5 { background: #e3f2fd; } .pip-5 .pip-name { color: #0d47a1; }
-
-.cat-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-bottom: 12px;
-}
-.cat-card {
-  border-radius: var(--radius);
-  padding: 20px 14px;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: transform 0.15s, box-shadow 0.15s;
-  text-align: center;
-}
-.cat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
-.cat-card:active { transform: scale(0.97); }
-.cat-card .cc-emoji { font-size: 32px; display: block; margin-bottom: 8px; }
-.cat-card .cc-name { font-size: 14px; font-weight: 600; display: block; }
-.cat-card .cc-sub { font-size: 12px; display: block; margin-top: 3px; opacity: 0.7; }
-
-.cc-0 { background: #e8f5e9; } .cc-0 .cc-name { color: #1b5e20; }
-.cc-1 { background: #f3e5f5; } .cc-1 .cc-name { color: #4a148c; }
-.cc-2 { background: #fff3e0; } .cc-2 .cc-name { color: #e65100; }
-.cc-3 { background: #e0f2f1; } .cc-3 .cc-name { color: #004d40; }
-.cc-4 { background: #fce4ec; } .cc-4 .cc-name { color: #880e4f; }
-.cc-5 { background: #e3f2fd; } .cc-5 .cc-name { color: #0d47a1; }
-
-.btn-all {
-  width: 100%;
-  padding: 16px;
-  border-radius: var(--radius);
-  border: none;
-  background: linear-gradient(135deg, var(--green-dark), var(--green-mid), var(--orange));
-  color: white;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.15s, transform 0.15s;
-  margin-bottom: 8px;
-}
-.btn-all:hover { opacity: 0.9; transform: translateY(-1px); }
-.btn-all:active { transform: scale(0.98); }
-
-.progress-wrap {
-  height: 5px;
-  background: rgba(0,0,0,0.08);
-  border-radius: 3px;
-  margin-bottom: 20px;
-  overflow: hidden;
-}
-.progress-fill {
-  height: 100%;
-  border-radius: 3px;
-  background: linear-gradient(90deg, var(--green-dark), var(--orange));
-  transition: width 0.4s ease;
-}
-
-.q-card {
-  background: var(--card);
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  overflow: hidden;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
-}
-.q-top {
-  padding: 22px 22px 18px;
-}
-.q-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  border-radius: 20px;
-  padding: 5px 14px;
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 14px;
-}
-.q-text {
-  font-family: 'Fraunces', serif;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1.4;
-  color: var(--text);
-}
-.opts { display: flex; flex-direction: column; gap: 8px; padding: 0 22px 20px; }
-.opt {
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  padding: 14px 16px;
-  cursor: pointer;
-  text-align: left;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  color: var(--text);
-  background: var(--card);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  transition: all 0.15s;
-}
-.opt:hover:not(:disabled) { background: #f5f5f0; border-color: rgba(0,0,0,0.2); }
-.opt:disabled { cursor: default; }
-.opt-letter {
-  width: 28px; height: 28px; border-radius: 50%;
-  background: #f0f0eb; border: 1px solid rgba(0,0,0,0.1);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 600; flex-shrink: 0;
-}
-.opt.correct { background: #e8f5e9; border-color: #2e7d32; color: #1b5e20; }
-.opt.correct .opt-letter { background: #2e7d32; color: white; border-color: #2e7d32; }
-.opt.wrong { background: #fce4ec; border-color: #c62828; color: #b71c1c; }
-.opt.wrong .opt-letter { background: #c62828; color: white; border-color: #c62828; }
-
-.feedback {
-  margin: 0 22px 16px;
-  border-radius: 12px;
-  padding: 14px 16px;
-  font-size: 14px;
-  line-height: 1.6;
-  display: none;
-}
-.feedback.correct { background: #e8f5e9; color: #1b5e20; }
-.feedback.wrong { background: #fce4ec; color: #880e4f; }
-
-.nav {
-  display: flex;
-  gap: 10px;
-  padding: 0 22px 22px;
-}
-.btn-nav {
-  flex: 1; padding: 13px; border-radius: 12px;
-  border: 1.5px solid rgba(0,0,0,0.12);
-  cursor: pointer; font-family: 'DM Sans', sans-serif;
-  font-size: 14px; font-weight: 500;
-  background: var(--card); color: var(--text);
-  transition: background 0.15s;
-}
-.btn-nav:hover { background: #f5f5f0; }
-.btn-nav.primary {
-  background: var(--green-dark); color: white;
-  border-color: var(--green-dark);
-}
-.btn-nav.primary:hover { background: #145722; }
-
-.end-screen {
-  text-align: center;
-  background: var(--card);
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  padding: 40px 24px 32px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
-}
-.end-trophy { font-size: 64px; display: block; margin-bottom: 16px; animation: bounce 1.5s ease-in-out infinite; }
-.end-title { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 900; color: var(--text); margin-bottom: 8px; }
-.end-score { font-family: 'Fraunces', serif; font-size: 52px; font-weight: 900; background: linear-gradient(135deg, var(--green-dark), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.end-sub { font-size: 14px; color: var(--muted); margin-top: 6px; margin-bottom: 24px; }
-.end-cats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 24px; }
-.end-cat { border-radius: 12px; padding: 14px 8px; text-align: center; }
-.end-cat .ec-emoji { font-size: 24px; }
-.end-cat .ec-name { font-size: 11px; font-weight: 600; display: block; margin-top: 4px; }
-.end-cat .ec-score { font-size: 18px; font-weight: 700; display: block; margin-top: 2px; }
-
-.screen { display: none; }
-.screen.active { display: block; }
-
-footer {
-  text-align: center;
-  margin-top: 32px;
-  font-size: 12px;
-  color: var(--muted);
-}
-footer a { color: var(--green-mid); text-decoration: none; }
+:root{--green-dark:#1a7a2e;--green-mid:#2ea832;--orange:#f5a623;--bg:#fafaf7;--card:#ffffff;--text:#1a1a1a;--muted:#6b7280;--border:rgba(0,0,0,0.08);--radius:16px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:24px 16px 60px;}
+.container{width:100%;max-width:560px;}
+.lang-bar{display:flex;justify-content:center;gap:8px;margin-bottom:24px;padding-top:16px;}
+.lang-btn{padding:8px 20px;border-radius:20px;border:1.5px solid var(--border);background:var(--card);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.15s;color:var(--text);}
+.lang-btn:hover{border-color:var(--green-mid);color:var(--green-dark);}
+.lang-btn.active{background:var(--green-dark);color:white;border-color:var(--green-dark);}
+.hero{text-align:center;padding:8px 0 28px;}
+.hero-emoji{font-size:64px;line-height:1;display:block;margin-bottom:16px;animation:bounce 2s ease-in-out infinite;}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.hero h1{font-family:'Fraunces',serif;font-size:38px;font-weight:900;background:linear-gradient(135deg,var(--green-dark) 0%,var(--green-mid) 50%,var(--orange) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;margin-bottom:10px;}
+.hero p{font-size:15px;color:var(--muted);}
+.scoreboard{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:24px;}
+.score-pip{border-radius:12px;padding:10px 4px 8px;text-align:center;border:2px solid transparent;transition:all 0.3s;}
+.score-pip .pip-emoji{font-size:18px;display:block;}
+.score-pip .pip-name{font-size:9px;font-weight:600;display:block;margin-top:3px;text-transform:uppercase;letter-spacing:0.04em;}
+.score-pip .pip-check{font-size:14px;display:block;margin-top:2px;min-height:18px;}
+.pip-0{background:#e8f5e9;}.pip-0 .pip-name{color:#1b5e20;}
+.pip-1{background:#f3e5f5;}.pip-1 .pip-name{color:#4a148c;}
+.pip-2{background:#fff3e0;}.pip-2 .pip-name{color:#e65100;}
+.pip-3{background:#e0f2f1;}.pip-3 .pip-name{color:#004d40;}
+.pip-4{background:#fce4ec;}.pip-4 .pip-name{color:#880e4f;}
+.pip-5{background:#e3f2fd;}.pip-5 .pip-name{color:#0d47a1;}
+.cat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px;}
+.cat-card{border-radius:var(--radius);padding:20px 14px;cursor:pointer;border:2px solid transparent;transition:transform 0.15s,box-shadow 0.15s;text-align:center;}
+.cat-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.1);}
+.cat-card:active{transform:scale(0.97);}
+.cat-card .cc-emoji{font-size:32px;display:block;margin-bottom:8px;}
+.cat-card .cc-name{font-size:14px;font-weight:600;display:block;}
+.cat-card .cc-sub{font-size:12px;display:block;margin-top:3px;opacity:0.7;}
+.cc-0{background:#e8f5e9;}.cc-0 .cc-name{color:#1b5e20;}
+.cc-1{background:#f3e5f5;}.cc-1 .cc-name{color:#4a148c;}
+.cc-2{background:#fff3e0;}.cc-2 .cc-name{color:#e65100;}
+.cc-3{background:#e0f2f1;}.cc-3 .cc-name{color:#004d40;}
+.cc-4{background:#fce4ec;}.cc-4 .cc-name{color:#880e4f;}
+.cc-5{background:#e3f2fd;}.cc-5 .cc-name{color:#0d47a1;}
+.btn-all{width:100%;padding:16px;border-radius:var(--radius);border:none;background:linear-gradient(135deg,var(--green-dark),var(--green-mid),var(--orange));color:white;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:opacity 0.15s,transform 0.15s;margin-bottom:8px;}
+.btn-all:hover{opacity:0.9;transform:translateY(-1px);}
+.progress-wrap{height:5px;background:rgba(0,0,0,0.08);border-radius:3px;margin-bottom:20px;overflow:hidden;}
+.progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--green-dark),var(--orange));transition:width 0.4s ease;}
+.q-card{background:var(--card);border-radius:20px;border:1px solid var(--border);overflow:hidden;margin-bottom:16px;box-shadow:0 2px 16px rgba(0,0,0,0.06);}
+.q-top{padding:22px 22px 18px;}
+.q-badge{display:inline-flex;align-items:center;gap:6px;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600;margin-bottom:14px;}
+.q-text{font-family:'Fraunces',serif;font-size:20px;font-weight:700;line-height:1.4;color:var(--text);}
+.opts{display:flex;flex-direction:column;gap:8px;padding:0 22px 20px;}
+.opt{border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;text-align:left;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);background:var(--card);display:flex;align-items:center;gap:12px;transition:all 0.15s;}
+.opt:hover:not(:disabled){background:#f5f5f0;border-color:rgba(0,0,0,0.2);}
+.opt:disabled{cursor:default;}
+.opt-letter{width:28px;height:28px;border-radius:50%;background:#f0f0eb;border:1px solid rgba(0,0,0,0.1);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;}
+.opt.correct{background:#e8f5e9;border-color:#2e7d32;color:#1b5e20;}
+.opt.correct .opt-letter{background:#2e7d32;color:white;border-color:#2e7d32;}
+.opt.wrong{background:#fce4ec;border-color:#c62828;color:#b71c1c;}
+.opt.wrong .opt-letter{background:#c62828;color:white;border-color:#c62828;}
+.feedback{margin:0 22px 16px;border-radius:12px;padding:14px 16px;font-size:14px;line-height:1.6;display:none;}
+.feedback.correct{background:#e8f5e9;color:#1b5e20;}
+.feedback.wrong{background:#fce4ec;color:#880e4f;}
+.nav{display:flex;gap:10px;padding:0 22px 22px;}
+.btn-nav{flex:1;padding:13px;border-radius:12px;border:1.5px solid rgba(0,0,0,0.12);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;background:var(--card);color:var(--text);transition:background 0.15s;}
+.btn-nav:hover{background:#f5f5f0;}
+.btn-nav.primary{background:var(--green-dark);color:white;border-color:var(--green-dark);}
+.btn-nav.primary:hover{background:#145722;}
+.end-screen{text-align:center;background:var(--card);border-radius:20px;border:1px solid var(--border);padding:40px 24px 32px;box-shadow:0 2px 16px rgba(0,0,0,0.06);}
+.end-trophy{font-size:64px;display:block;margin-bottom:16px;animation:bounce 1.5s ease-in-out infinite;}
+.end-title{font-family:'Fraunces',serif;font-size:26px;font-weight:900;color:var(--text);margin-bottom:8px;}
+.end-score{font-family:'Fraunces',serif;font-size:52px;font-weight:900;background:linear-gradient(135deg,var(--green-dark),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.end-sub{font-size:14px;color:var(--muted);margin-top:6px;margin-bottom:24px;}
+.end-cats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:24px;}
+.end-cat{border-radius:12px;padding:14px 8px;text-align:center;}
+.end-cat .ec-emoji{font-size:24px;}
+.end-cat .ec-name{font-size:11px;font-weight:600;display:block;margin-top:4px;}
+.end-cat .ec-score{font-size:18px;font-weight:700;display:block;margin-top:2px;}
+.btn-share{width:100%;padding:15px;border-radius:var(--radius);border:none;background:#0A66C2;color:white;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:opacity 0.15s,transform 0.15s;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:10px;}
+.btn-share:hover{opacity:0.9;transform:translateY(-1px);}
+.btn-share svg{width:20px;height:20px;fill:white;flex-shrink:0;}
+.screen{display:none;}
+.screen.active{display:block;}
+footer{text-align:center;margin-top:32px;font-size:12px;color:var(--muted);}
+footer a{color:var(--green-mid);text-decoration:none;}
 </style>
 </head>
 <body>
 <div class="container">
 
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('es')">🇪🇸 Español</button>
+  <button class="lang-btn" onclick="setLang('fr')">🇫🇷 Français</button>
+  <button class="lang-btn" onclick="setLang('en')">🇬🇧 English</button>
+</div>
+
 <div id="screen-start" class="screen active">
   <div class="hero">
     <span class="hero-emoji">🥑</span>
-    <h1>Trivial del Aguacate</h1>
-    <p>6 categorías · 18 preguntas · ¿Cuánto sabes realmente?</p>
+    <h1 id="hero-title">Trivial del Aguacate</h1>
+    <p id="hero-sub">6 categorías · 18 preguntas · ¿Cuánto sabes?</p>
   </div>
-
-  <div class="scoreboard" id="scoreboard">
-    <div class="score-pip pip-0"><span class="pip-emoji">🔬</span><span class="pip-name">Bio</span><span class="pip-check" id="pip-0"></span></div>
-    <div class="score-pip pip-1"><span class="pip-emoji">📜</span><span class="pip-name">Hist</span><span class="pip-check" id="pip-1"></span></div>
-    <div class="score-pip pip-2"><span class="pip-emoji">💰</span><span class="pip-name">Eco</span><span class="pip-check" id="pip-2"></span></div>
-    <div class="score-pip pip-3"><span class="pip-emoji">🌿</span><span class="pip-name">Medio</span><span class="pip-check" id="pip-3"></span></div>
-    <div class="score-pip pip-4"><span class="pip-emoji">🍽️</span><span class="pip-name">Gastro</span><span class="pip-check" id="pip-4"></span></div>
-    <div class="score-pip pip-5"><span class="pip-emoji">💡</span><span class="pip-name">Curio</span><span class="pip-check" id="pip-5"></span></div>
+  <div class="scoreboard">
+    <div class="score-pip pip-0"><span class="pip-emoji">🔬</span><span class="pip-name" id="pip-n0">Bio</span><span class="pip-check" id="pip-0"></span></div>
+    <div class="score-pip pip-1"><span class="pip-emoji">📜</span><span class="pip-name" id="pip-n1">Hist</span><span class="pip-check" id="pip-1"></span></div>
+    <div class="score-pip pip-2"><span class="pip-emoji">💰</span><span class="pip-name" id="pip-n2">Eco</span><span class="pip-check" id="pip-2"></span></div>
+    <div class="score-pip pip-3"><span class="pip-emoji">🌿</span><span class="pip-name" id="pip-n3">Medio</span><span class="pip-check" id="pip-3"></span></div>
+    <div class="score-pip pip-4"><span class="pip-emoji">🍽️</span><span class="pip-name" id="pip-n4">Gastro</span><span class="pip-check" id="pip-4"></span></div>
+    <div class="score-pip pip-5"><span class="pip-emoji">💡</span><span class="pip-name" id="pip-n5">Curio</span><span class="pip-check" id="pip-5"></span></div>
   </div>
-
-  <div class="cat-grid">
-    <div class="cat-card cc-0" onclick="startCategory(0)"><span class="cc-emoji">🔬</span><span class="cc-name">Biología</span><span class="cc-sub">3 preguntas</span></div>
-    <div class="cat-card cc-1" onclick="startCategory(1)"><span class="cc-emoji">📜</span><span class="cc-name">Historia</span><span class="cc-sub">3 preguntas</span></div>
-    <div class="cat-card cc-2" onclick="startCategory(2)"><span class="cc-emoji">💰</span><span class="cc-name">Economía</span><span class="cc-sub">3 preguntas</span></div>
-    <div class="cat-card cc-3" onclick="startCategory(3)"><span class="cc-emoji">🌿</span><span class="cc-name">Medio ambiente</span><span class="cc-sub">3 preguntas</span></div>
-    <div class="cat-card cc-4" onclick="startCategory(4)"><span class="cc-emoji">🍽️</span><span class="cc-name">Gastronomía</span><span class="cc-sub">3 preguntas</span></div>
-    <div class="cat-card cc-5" onclick="startCategory(5)"><span class="cc-emoji">💡</span><span class="cc-name">Curiosidades</span><span class="cc-sub">3 preguntas</span></div>
-  </div>
-  <button class="btn-all" onclick="startAll()">🥑 Jugar todo seguido — 18 preguntas</button>
+  <div class="cat-grid" id="cat-grid"></div>
+  <button class="btn-all" id="btn-all" onclick="startAll()">🥑 Jugar todo — 18 preguntas</button>
 </div>
 
 <div id="screen-question" class="screen">
@@ -295,7 +124,7 @@ footer a { color: var(--green-mid); text-decoration: none; }
     <div class="opts" id="opts"></div>
     <div class="feedback" id="feedback"></div>
     <div class="nav">
-      <button class="btn-nav" onclick="goHome()">← Inicio</button>
+      <button class="btn-nav" id="btn-home" onclick="goHome()">← Inicio</button>
       <button class="btn-nav primary" id="next-btn" onclick="nextQ()" style="display:none">Siguiente →</button>
     </div>
   </div>
@@ -308,64 +137,179 @@ footer a { color: var(--green-mid); text-decoration: none; }
     <div class="end-score" id="end-score"></div>
     <div class="end-sub" id="end-sub"></div>
     <div class="end-cats" id="end-cats"></div>
-    <button class="btn-all" onclick="goHome()">Jugar de nuevo 🥑</button>
+    <button class="btn-share" id="btn-share" onclick="shareLinkedIn()">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      <span id="btn-share-text">Compartir en LinkedIn</span>
+    </button>
+    <button class="btn-all" id="btn-again" onclick="goHome()">Jugar de nuevo 🥑</button>
   </div>
 </div>
 
-<footer>Hecho con 🥑 · Comparte en <a href="https://linkedin.com" target="_blank">LinkedIn</a></footer>
-
+<footer>🥑 · <a href="https://linkedin.com" target="_blank">LinkedIn</a></footer>
 </div>
+
 <script>
-const CATS=[
-  {name:"Biología",emoji:"🔬",badge:"#e8f5e9",btext:"#1b5e20"},
-  {name:"Historia",emoji:"📜",badge:"#f3e5f5",btext:"#4a148c"},
-  {name:"Economía",emoji:"💰",badge:"#fff3e0",btext:"#e65100"},
-  {name:"Medio amb.",emoji:"🌿",badge:"#e0f2f1",btext:"#004d40"},
-  {name:"Gastronomía",emoji:"🍽️",badge:"#fce4ec",btext:"#880e4f"},
-  {name:"Curiosidades",emoji:"💡",badge:"#e3f2fd",btext:"#0d47a1"}
-];
-const QS=[
-  {cat:0,q:"¿Qué enzimas se liberan al apretar un aguacate y causan las manchas marrones?",opts:["Polifenol oxidasas","Lipasas","Amilasas","Proteasas"],ans:0,exp:"Las polifenol oxidasas, normalmente separadas de sus sustratos, se liberan al romperse las células y causan la oxidación que genera manchas marrones."},
-  {cat:0,q:"¿Por qué el aguacate no madura mientras está en el árbol?",opts:["Falta de luz solar directa","El árbol produce una hormona inhibidora","La temperatura del árbol es muy baja","No tiene acceso al agua"],ans:1,exp:"El árbol produce una hormona que inhibe el proceso de maduración. Solo cuando se separa, el etileno interno toma el control."},
-  {cat:0,q:"¿Cuánto potasio contiene un aguacate mediano comparado con un plátano?",opts:["La misma cantidad","La mitad","El doble aproximadamente","Tres veces más"],ans:2,exp:"Un aguacate mediano tiene ~975 mg de potasio frente a los ~422 mg de un plátano. Casi el doble, aunque el plátano se lleva toda la fama."},
-  {cat:1,q:"¿Qué significa la palabra náhuatl 'āhuacatl' de donde viene 'aguacate'?",opts:["Fruto verde","Testículo","Mantequilla de árbol","Regalo de los dioses"],ans:1,exp:"Los aztecas llamaban al aguacate 'āhuacatl' que significa testículo, por su forma y porque cuelgan en pares del árbol."},
-  {cat:1,q:"¿Quién creó la variedad Hass que representa el 80% del aguacate mundial?",opts:["Un agrónomo californiano","Un cartero llamado Rudolph Hass","El gobierno mexicano","Una empresa agrícola israelí"],ans:1,exp:"Rudolph Hass era un cartero de California que en 1926 compró un árbol de semilla. Estuvo a punto de cortarlo, pero al probarlo descubrió su calidad excepcional."},
-  {cat:1,q:"¿Hace cuántos años se extinguieron los principales dispersores de semillas del aguacate?",opts:["Hace 1.000 años","Hace 5.000 años","Hace 13.000 años","Hace 50.000 años"],ans:2,exp:"Los mastodontes y mamuts que dispersaban sus semillas se extinguieron hace ~13.000 años. Sin los humanos que lo cultivaron, el aguacate habría desaparecido."},
-  {cat:2,q:"¿Qué estado mexicano produce el 80% de los aguacates que consume Estados Unidos?",opts:["Jalisco","Oaxaca","Michoacán","Veracruz"],ans:2,exp:"Michoacán es el corazón aguacatero de México y del mundo. También es territorio donde operan cárteles que extorsionan a agricultores del 'oro verde'."},
-  {cat:2,q:"¿En qué evento deportivo se consumen ~120 millones de aguacates en una semana en EE.UU.?",opts:["Los Juegos Olímpicos","El Super Bowl","La Copa del Mundo","El All-Star de la NBA"],ans:1,exp:"El Super Bowl es el mayor evento de consumo de aguacates en EE.UU., desde que la NFL levantó la prohibición de publicidad de aguacate en 1992."},
-  {cat:2,q:"¿Cuánto recibe el agricultor de Michoacán por cada aguacate?",opts:["0,30 - 0,50 dólares","1 - 1,50 dólares","2 - 3 dólares","Lo mismo que en Europa"],ans:0,exp:"El agricultor recibe entre 0,30 y 0,50 dólares por aguacate que en Europa se vende a 1,50-2,50 euros. La cadena de valor es brutalmente desigual."},
-  {cat:3,q:"¿Cuántos litros de agua se necesitan para producir un solo aguacate?",opts:["10 litros","70 litros","200 litros","500 litros"],ans:1,exp:"Un aguacate requiere ~70 litros de agua (hasta 320 según el método de riego). El problema es la concentración en regiones ya hídricamente estresadas."},
-  {cat:3,q:"¿Qué especie migratoria pierde su hábitat por la deforestación aguacatera en Michoacán?",opts:["El águila real","La mariposa monarca","El tucán","El quetzal"],ans:1,exp:"Los bosques de oyamel en Michoacán, destino de invernada de millones de mariposas monarca, están siendo talados para plantar aguacates."},
-  {cat:3,q:"¿Cuánto CO2 puede absorber al año un árbol de aguacate adulto?",opts:["1-2 kg","5-10 kg","20-30 kg","100 kg"],ans:2,exp:"Un árbol adulto absorbe entre 20 y 30 kg de CO2 al año, convirtiéndolo en un potencial aliado contra el cambio climático si se cultiva sosteniblemente."},
-  {cat:4,q:"¿Cuál es el punto de humo del aceite de aguacate refinado?",opts:["160°C","210°C","271°C","350°C"],ans:2,exp:"El aceite de aguacate aguanta hasta 271°C, el doble que el aceite de oliva virgen extra (~190°C). Ideal para frituras a alta temperatura."},
-  {cat:4,q:"Según la tradición mexicana auténtica, ¿qué ingrediente NO lleva el guacamole original?",opts:["Chile serrano","Cilantro","Tomate","Lima"],ans:2,exp:"El guacamole auténtico lleva aguacate, chile, cebolla, cilantro, sal y lima. El tomate es una adición posterior, posiblemente colonial."},
-  {cat:4,q:"¿Qué compuesto del aguacate maduro contribuye a su sabor umami?",opts:["Ácido cítrico","Ácido glutámico","Capsaicina","Taninos"],ans:1,exp:"El aguacate maduro contiene ácido glutámico, aportando umami. Combinado con el tomate y la sal, la intensidad del sabor se multiplica."},
-  {cat:5,q:"¿Cuántas variedades de aguacate existen documentadas en el mundo?",opts:["Unas 50","Unas 200","Más de 1.000","Más de 5.000"],ans:2,exp:"Existen más de 1.000 variedades documentadas, con sabores que van desde nuez hasta anís. La homogeneización hacia el Hass ha eliminado esta diversidad."},
-  {cat:5,q:"¿En qué país surgió el 'avocado toast' que se atribuye erróneamente a los millennials?",opts:["Estados Unidos","Reino Unido","Australia","México"],ans:2,exp:"El chef australiano Bill Granger lo incluía en su menú de Sydney desde los años 90. Lo que cambió en los 2010 fue la viralización en redes sociales."},
-  {cat:5,q:"¿Qué organización espacial incluye el aguacate en sus menús de misiones largas?",opts:["ESA europea","NASA","Agencia espacial china","Roscosmos"],ans:1,exp:"La NASA incluye preparaciones de aguacate por su alta densidad calórica, grasas esenciales y alta palatabilidad en condiciones de microgravedad."}
+const QUIZ_URL = window.location.href.split('?')[0];
+
+const LANGS = {
+  es: {
+    heroTitle:"Trivial del Aguacate", heroSub:"6 categorías · 18 preguntas · ¿Cuánto sabes?",
+    btnAll:"🥑 Jugar todo — 18 preguntas", qCount:"3 preguntas",
+    btnHome:"← Inicio", btnNext:"Siguiente →", btnAgain:"Jugar de nuevo 🥑",
+    btnShare:"Compartir en LinkedIn",
+    pct:(p)=>p+"% de respuestas correctas",
+    shareText:(s,t,pct,trophy)=>`${trophy} Acabo de hacer el Trivial del Aguacate y he sacado ${s}/${t} (${pct}%)!\n\n🥑 ¿Cuánto sabes tú sobre el aguacate? Ponlo a prueba → ${QUIZ_URL}\n\n#Aguacate #CuriosidadesDelAguacate`,
+    titles:{100:"¡Perfecto! Eres un maestro del aguacate",80:"¡Excelente! Sabes mucho de aguacates",60:"¡Bien! Vas por buen camino",40:"No está mal, pero hay margen de mejora",0:"¡Sigue aprendiendo!"},
+    cats:["Biología","Historia","Economía","Medio amb.","Gastronomía","Curiosidades"],
+    pipNames:["Bio","Hist","Eco","Medio","Gastro","Curio"]
+  },
+  fr: {
+    heroTitle:"Trivial de l'Avocat", heroSub:"6 catégories · 18 questions · Combien en savez-vous ?",
+    btnAll:"🥑 Tout jouer — 18 questions", qCount:"3 questions",
+    btnHome:"← Accueil", btnNext:"Suivant →", btnAgain:"Rejouer 🥑",
+    btnShare:"Partager sur LinkedIn",
+    pct:(p)=>p+"% de bonnes réponses",
+    shareText:(s,t,pct,trophy)=>`${trophy} Je viens de faire le Trivial de l'Avocat : ${s}/${t} (${pct}%) !\n\n🥑 Et vous, combien en savez-vous sur l'avocat ? Testez-vous → ${QUIZ_URL}\n\n#Avocat #CuriositésAvocat`,
+    titles:{100:"Parfait ! Vous êtes un expert de l'avocat",80:"Excellent ! Vous connaissez bien l'avocat",60:"Bien ! Vous êtes sur la bonne voie",40:"Pas mal, mais il y a de la marge",0:"Continuez à apprendre !"},
+    cats:["Biologie","Histoire","Économie","Environnement","Gastronomie","Curiosités"],
+    pipNames:["Bio","Hist","Éco","Env","Gastro","Curio"]
+  },
+  en: {
+    heroTitle:"Avocado Trivia", heroSub:"6 categories · 18 questions · How much do you know?",
+    btnAll:"🥑 Play all — 18 questions", qCount:"3 questions",
+    btnHome:"← Home", btnNext:"Next →", btnAgain:"Play again 🥑",
+    btnShare:"Share on LinkedIn",
+    pct:(p)=>p+"% correct answers",
+    shareText:(s,t,pct,trophy)=>`${trophy} Just scored ${s}/${t} (${pct}%) on the Avocado Trivia quiz!\n\n🥑 How much do you know about avocados? Find out → ${QUIZ_URL}\n\n#Avocado #AvocadoFacts`,
+    titles:{100:"Perfect! You're an avocado master",80:"Excellent! You know a lot about avocados",60:"Good job! You're on the right track",40:"Not bad, but there's room to improve",0:"Keep learning!"},
+    cats:["Biology","History","Economy","Environment","Gastronomy","Curiosities"],
+    pipNames:["Bio","Hist","Eco","Env","Gastro","Curio"]
+  }
+};
+
+const CATS_META=[
+  {emoji:"🔬",badge:"#e8f5e9",btext:"#1b5e20"},
+  {emoji:"📜",badge:"#f3e5f5",btext:"#4a148c"},
+  {emoji:"💰",badge:"#fff3e0",btext:"#e65100"},
+  {emoji:"🌿",badge:"#e0f2f1",btext:"#004d40"},
+  {emoji:"🍽️",badge:"#fce4ec",btext:"#880e4f"},
+  {emoji:"💡",badge:"#e3f2fd",btext:"#0d47a1"}
 ];
 
-let queue=[],cur=0,answered=false,sessionScore=0,catScores=[0,0,0,0,0,0],catCounts=[0,0,0,0,0,0];
+const QS={
+  es:[
+    {cat:0,q:"¿Qué enzimas se liberan al apretar un aguacate y causan las manchas marrones?",opts:["Polifenol oxidasas","Lipasas","Amilasas","Proteasas"],ans:0,exp:"Las polifenol oxidasas, normalmente separadas de sus sustratos, se liberan al romperse las células y causan la oxidación que genera manchas marrones."},
+    {cat:0,q:"¿Por qué el aguacate no madura mientras está en el árbol?",opts:["Falta de luz solar","El árbol produce una hormona inhibidora","La temperatura es muy baja","No tiene acceso al agua"],ans:1,exp:"El árbol produce una hormona que inhibe la maduración. Solo al separarse del árbol el etileno interno toma el control."},
+    {cat:0,q:"¿Cuánto potasio tiene un aguacate mediano comparado con un plátano?",opts:["La misma cantidad","La mitad","El doble aproximadamente","Tres veces más"],ans:2,exp:"Un aguacate tiene ~975 mg de potasio frente a los ~422 mg de un plátano. Casi el doble, aunque el plátano se lleva toda la fama."},
+    {cat:1,q:"¿Qué significa la palabra náhuatl 'āhuacatl'?",opts:["Fruto verde","Testículo","Mantequilla de árbol","Regalo de los dioses"],ans:1,exp:"Los aztecas llamaban al aguacate 'āhuacatl' que significa testículo, por su forma y porque cuelgan en pares del árbol."},
+    {cat:1,q:"¿Quién creó la variedad Hass que representa el 80% del aguacate mundial?",opts:["Un agrónomo californiano","Un cartero llamado Rudolph Hass","El gobierno mexicano","Una empresa israelí"],ans:1,exp:"Rudolph Hass era un cartero de California que en 1926 compró un árbol de semilla y estuvo a punto de cortarlo."},
+    {cat:1,q:"¿Hace cuántos años se extinguieron los principales dispersores del aguacate?",opts:["1.000 años","5.000 años","13.000 años","50.000 años"],ans:2,exp:"Los mastodontes y mamuts que dispersaban sus semillas se extinguieron hace ~13.000 años. Sin los humanos que lo cultivaron, el aguacate habría desaparecido."},
+    {cat:2,q:"¿Qué estado mexicano produce el 80% de los aguacates que consume EE.UU.?",opts:["Jalisco","Oaxaca","Michoacán","Veracruz"],ans:2,exp:"Michoacán es el corazón aguacatero del mundo y también territorio donde operan cárteles que extorsionan a agricultores del 'oro verde'."},
+    {cat:2,q:"¿En qué evento deportivo se consumen ~120 millones de aguacates en una semana en EE.UU.?",opts:["Juegos Olímpicos","Super Bowl","Copa del Mundo","NBA All-Star"],ans:1,exp:"El Super Bowl es el mayor evento de consumo de aguacates en EE.UU. desde que la NFL levantó la prohibición de publicidad en 1992."},
+    {cat:2,q:"¿Cuánto recibe el agricultor de Michoacán por cada aguacate?",opts:["0,30–0,50 dólares","1–1,50 dólares","2–3 dólares","Lo mismo que en Europa"],ans:0,exp:"El agricultor recibe entre 0,30 y 0,50 dólares por aguacate que en Europa se vende a 1,50–2,50 euros."},
+    {cat:3,q:"¿Cuántos litros de agua se necesitan para producir un solo aguacate?",opts:["10 litros","70 litros","200 litros","500 litros"],ans:1,exp:"Un aguacate requiere ~70 litros de agua. El problema es la concentración en regiones ya hídricamente estresadas."},
+    {cat:3,q:"¿Qué especie pierde su hábitat de invernada por la deforestación aguacatera en Michoacán?",opts:["El águila real","La mariposa monarca","El tucán","El quetzal"],ans:1,exp:"Los bosques de oyamel en Michoacán, destino de millones de mariposas monarca, están siendo talados para plantar aguacates."},
+    {cat:3,q:"¿Cuánto CO2 absorbe al año un árbol de aguacate adulto?",opts:["1–2 kg","5–10 kg","20–30 kg","100 kg"],ans:2,exp:"Un árbol adulto absorbe entre 20 y 30 kg de CO2 al año, convirtiéndolo en un potencial aliado contra el cambio climático."},
+    {cat:4,q:"¿Cuál es el punto de humo del aceite de aguacate refinado?",opts:["160°C","210°C","271°C","350°C"],ans:2,exp:"El aceite de aguacate aguanta hasta 271°C, el doble que el aceite de oliva virgen extra (~190°C)."},
+    {cat:4,q:"Según la tradición mexicana, ¿qué ingrediente NO lleva el guacamole original?",opts:["Chile serrano","Cilantro","Tomate","Lima"],ans:2,exp:"El guacamole auténtico lleva aguacate, chile, cebolla, cilantro, sal y lima. El tomate es una adición posterior."},
+    {cat:4,q:"¿Qué compuesto del aguacate maduro contribuye a su sabor umami?",opts:["Ácido cítrico","Ácido glutámico","Capsaicina","Taninos"],ans:1,exp:"El aguacate maduro contiene ácido glutámico, aportando umami. Combinado con tomate y sal, la intensidad se multiplica."},
+    {cat:5,q:"¿Cuántas variedades de aguacate existen documentadas en el mundo?",opts:["Unas 50","Unas 200","Más de 1.000","Más de 5.000"],ans:2,exp:"Existen más de 1.000 variedades documentadas, con sabores que van desde nuez hasta anís."},
+    {cat:5,q:"¿En qué país surgió el 'avocado toast' que se atribuye a los millennials?",opts:["Estados Unidos","Reino Unido","Australia","México"],ans:2,exp:"El chef australiano Bill Granger lo incluía en su menú de Sydney desde los años 90."},
+    {cat:5,q:"¿Qué organización espacial incluye el aguacate en sus menús de misiones largas?",opts:["ESA","NASA","Agencia espacial china","Roscosmos"],ans:1,exp:"La NASA incluye preparaciones de aguacate por su alta densidad calórica y alta palatabilidad en condiciones de microgravedad."}
+  ],
+  fr:[
+    {cat:0,q:"Quelles enzymes sont libérées quand on presse un avocat et causent les taches brunes ?",opts:["Polyphénol oxydases","Lipases","Amylases","Protéases"],ans:0,exp:"Les polyphénol oxydases, normalement séparées de leurs substrats, sont libérées lors de la rupture cellulaire et provoquent l'oxydation responsable des taches brunes."},
+    {cat:0,q:"Pourquoi l'avocat ne mûrit-il pas tant qu'il est sur l'arbre ?",opts:["Manque de lumière solaire","L'arbre produit une hormone inhibitrice","La température est trop basse","Manque d'eau"],ans:1,exp:"L'arbre produit une hormone qui inhibe la maturation. Ce n'est qu'une fois séparé de l'arbre que l'éthylène interne prend le contrôle."},
+    {cat:0,q:"Combien de potassium contient un avocat moyen comparé à une banane ?",opts:["La même quantité","La moitié","Environ le double","Trois fois plus"],ans:2,exp:"Un avocat contient ~975 mg de potassium contre ~422 mg pour une banane. Presque le double, bien que la banane ait toute la réputation."},
+    {cat:1,q:"Que signifie le mot nahuatl 'āhuacatl' ?",opts:["Fruit vert","Testicule","Beurre d'arbre","Cadeau des dieux"],ans:1,exp:"Les Aztèques appelaient l'avocat 'āhuacatl' qui signifie testicule, à cause de sa forme et parce qu'ils poussent par paires."},
+    {cat:1,q:"Qui a créé la variété Hass qui représente 80% des avocats mondiaux ?",opts:["Un agronome californien","Un facteur nommé Rudolph Hass","Le gouvernement mexicain","Une entreprise israélienne"],ans:1,exp:"Rudolph Hass était un facteur de Californie qui, en 1926, acheta un arbre à partir d'une graine et faillit le couper."},
+    {cat:1,q:"Il y a combien d'années les principaux disperseurs de graines se sont-ils éteints ?",opts:["1 000 ans","5 000 ans","13 000 ans","50 000 ans"],ans:2,exp:"Les mastodontes et mammouths qui dispersaient les graines se sont éteints il y a ~13 000 ans. Sans l'agriculture humaine, l'avocat aurait disparu."},
+    {cat:2,q:"Quel état mexicain produit 80% des avocats consommés aux États-Unis ?",opts:["Jalisco","Oaxaca","Michoacán","Veracruz"],ans:2,exp:"Le Michoacán est le cœur mondial de l'avocat et aussi un territoire où des cartels rackettent les agriculteurs de l'«or vert»."},
+    {cat:2,q:"Lors de quel événement sportif consomme-t-on ~120 millions d'avocats en une semaine aux USA ?",opts:["Jeux Olympiques","Super Bowl","Coupe du Monde","NBA All-Star"],ans:1,exp:"Le Super Bowl est le plus grand événement de consommation d'avocats aux États-Unis depuis 1992."},
+    {cat:2,q:"Combien reçoit l'agriculteur du Michoacán pour chaque avocat ?",opts:["0,30–0,50 dollar","1–1,50 dollar","2–3 dollars","Autant qu'en Europe"],ans:0,exp:"L'agriculteur reçoit entre 0,30 et 0,50 dollar par avocat qui se vend 1,50–2,50 euros en Europe."},
+    {cat:3,q:"Combien de litres d'eau faut-il pour produire un seul avocat ?",opts:["10 litres","70 litres","200 litres","500 litres"],ans:1,exp:"Un avocat nécessite ~70 litres d'eau. Le problème est la concentration dans des régions déjà en stress hydrique."},
+    {cat:3,q:"Quelle espèce perd son habitat d'hivernage à cause de la déforestation au Michoacán ?",opts:["L'aigle royal","Le papillon monarque","Le toucan","Le quetzal"],ans:1,exp:"Les forêts d'oyamel au Michoacán, destination hivernale de millions de papillons monarques, sont abattues pour planter des avocatiers."},
+    {cat:3,q:"Combien de CO2 absorbe par an un avocatier adulte ?",opts:["1–2 kg","5–10 kg","20–30 kg","100 kg"],ans:2,exp:"Un arbre adulte absorbe entre 20 et 30 kg de CO2 par an, en faisant un allié potentiel contre le changement climatique."},
+    {cat:4,q:"Quel est le point de fumée de l'huile d'avocat raffinée ?",opts:["160°C","210°C","271°C","350°C"],ans:2,exp:"L'huile d'avocat supporte jusqu'à 271°C, le double de l'huile d'olive vierge extra (~190°C)."},
+    {cat:4,q:"Selon la tradition mexicaine, quel ingrédient ne contient PAS le guacamole original ?",opts:["Piment serrano","Coriandre","Tomate","Citron vert"],ans:2,exp:"Le guacamole authentique contient avocat, piment, oignon, coriandre, sel et citron vert. La tomate est un ajout ultérieur."},
+    {cat:4,q:"Quel composé de l'avocat mûr contribue à sa saveur umami ?",opts:["Acide citrique","Acide glutamique","Capsaïcine","Tanins"],ans:1,exp:"L'avocat mûr contient de l'acide glutamique, apportant de l'umami. Combiné à la tomate et au sel, l'intensité se multiplie."},
+    {cat:5,q:"Combien de variétés d'avocats sont documentées dans le monde ?",opts:["Une cinquantaine","Une deux-centaine","Plus de 1 000","Plus de 5 000"],ans:2,exp:"Plus de 1 000 variétés sont documentées, avec des saveurs allant de la noisette à l'anis."},
+    {cat:5,q:"Dans quel pays est né l'«avocado toast» attribué à tort aux millennials ?",opts:["États-Unis","Royaume-Uni","Australie","Mexique"],ans:2,exp:"Le chef australien Bill Granger l'incluait dans son menu de Sydney depuis les années 90."},
+    {cat:5,q:"Quelle agence spatiale inclut l'avocat dans les menus de ses longues missions ?",opts:["ESA","NASA","Agence spatiale chinoise","Roscosmos"],ans:1,exp:"La NASA inclut des préparations à base d'avocat pour sa haute densité calorique et sa palatabilité en microgravité."}
+  ],
+  en:[
+    {cat:0,q:"What enzymes are released when you squeeze an avocado and cause brown spots?",opts:["Polyphenol oxidases","Lipases","Amylases","Proteases"],ans:0,exp:"Polyphenol oxidases, normally separated from their substrates, are released when cells rupture and cause the oxidation that creates brown spots."},
+    {cat:0,q:"Why doesn't an avocado ripen while it's on the tree?",opts:["Lack of direct sunlight","The tree produces an inhibiting hormone","The temperature is too low","Lack of water"],ans:1,exp:"The tree produces a hormone that inhibits ripening. Only once separated from the tree does the internal ethylene take control."},
+    {cat:0,q:"How much potassium does an avocado have compared to a banana?",opts:["The same amount","Half as much","About twice as much","Three times as much"],ans:2,exp:"An avocado has ~975 mg of potassium vs ~422 mg in a banana. Nearly double, even though bananas get all the credit."},
+    {cat:1,q:"What does the Nahuatl word 'āhuacatl' mean?",opts:["Green fruit","Testicle","Tree butter","Gift of the gods"],ans:1,exp:"The Aztecs called the avocado 'āhuacatl' meaning testicle, because of its shape and because they hang in pairs from the tree."},
+    {cat:1,q:"Who created the Hass variety that represents 80% of the world's avocados?",opts:["A Californian agronomist","A postman named Rudolph Hass","The Mexican government","An Israeli company"],ans:1,exp:"Rudolph Hass was a California postman who bought a seedling tree in 1926 and nearly cut it down before discovering its exceptional quality."},
+    {cat:1,q:"How many years ago did the main seed dispersers of the avocado go extinct?",opts:["1,000 years ago","5,000 years ago","13,000 years ago","50,000 years ago"],ans:2,exp:"Mastodons and mammoths that dispersed avocado seeds went extinct ~13,000 years ago. Without human cultivation, the avocado would have disappeared."},
+    {cat:2,q:"Which Mexican state produces 80% of the avocados consumed in the USA?",opts:["Jalisco","Oaxaca","Michoacán","Veracruz"],ans:2,exp:"Michoacán is the world's avocado heartland and also territory where cartels extort farmers of the 'green gold'."},
+    {cat:2,q:"During which sporting event are ~120 million avocados consumed in one week in the USA?",opts:["The Olympics","The Super Bowl","The World Cup","NBA All-Star"],ans:1,exp:"The Super Bowl is the biggest avocado consumption event in the USA, since the NFL lifted the advertising ban in 1992."},
+    {cat:2,q:"How much does a Michoacán farmer receive per avocado?",opts:["$0.30–0.50","$1.00–1.50","$2.00–3.00","The same as in Europe"],ans:0,exp:"The farmer receives between $0.30 and $0.50 per avocado that sells for €1.50–2.50 in Europe. The value chain is brutally unequal."},
+    {cat:3,q:"How many litres of water are needed to produce a single avocado?",opts:["10 litres","70 litres","200 litres","500 litres"],ans:1,exp:"An avocado requires ~70 litres of water. The problem is the concentration in already water-stressed regions."},
+    {cat:3,q:"Which species loses its wintering habitat to avocado deforestation in Michoacán?",opts:["The golden eagle","The monarch butterfly","The toucan","The quetzal"],ans:1,exp:"The oyamel forests in Michoacán, wintering destination for millions of monarch butterflies, are being cut down to plant avocado trees."},
+    {cat:3,q:"How much CO2 can a mature avocado tree absorb per year?",opts:["1–2 kg","5–10 kg","20–30 kg","100 kg"],ans:2,exp:"A mature tree absorbs between 20 and 30 kg of CO2 per year, making it a potential ally against climate change."},
+    {cat:4,q:"What is the smoke point of refined avocado oil?",opts:["160°C","210°C","271°C","350°C"],ans:2,exp:"Avocado oil withstands up to 271°C, twice that of extra virgin olive oil (~190°C). Ideal for high-temperature cooking."},
+    {cat:4,q:"According to authentic Mexican tradition, which ingredient does NOT belong in original guacamole?",opts:["Serrano chilli","Coriander","Tomato","Lime"],ans:2,exp:"Authentic guacamole contains avocado, chilli, onion, coriander, salt and lime. Tomato is a later addition."},
+    {cat:4,q:"Which compound in ripe avocado contributes to its umami flavour?",opts:["Citric acid","Glutamic acid","Capsaicin","Tannins"],ans:1,exp:"Ripe avocado contains glutamic acid, providing umami. Combined with tomato and salt, the flavour intensity multiplies."},
+    {cat:5,q:"How many avocado varieties are documented worldwide?",opts:["About 50","About 200","More than 1,000","More than 5,000"],ans:2,exp:"Over 1,000 varieties are documented, with flavours ranging from walnut to anise."},
+    {cat:5,q:"In which country did 'avocado toast' originate, wrongly attributed to millennials?",opts:["United States","United Kingdom","Australia","Mexico"],ans:2,exp:"Australian chef Bill Granger had it on his Sydney menu since the 1990s. What changed in the 2010s was its viral spread on social media."},
+    {cat:5,q:"Which space agency includes avocado in its long-mission menus?",opts:["ESA","NASA","Chinese Space Agency","Roscosmos"],ans:1,exp:"NASA includes avocado preparations for their high caloric density and palatability in microgravity conditions."}
+  ]
+};
+
+let lang='es', queue=[], cur=0, answered=false, sessionScore=0;
+let catScores=[0,0,0,0,0,0];
+let lastTrophy='', lastScore=0, lastTotal=0, lastPct=0;
+
+function setLang(l){
+  lang=l;
+  document.querySelectorAll('.lang-btn').forEach((b,i)=>{b.classList.toggle('active',['es','fr','en'][i]===l);});
+  renderStart();
+  goHome();
+}
+
+function renderStart(){
+  const L=LANGS[lang];
+  document.getElementById('hero-title').textContent=L.heroTitle;
+  document.getElementById('hero-sub').textContent=L.heroSub;
+  document.getElementById('btn-all').textContent=L.btnAll;
+  document.getElementById('btn-home').textContent=L.btnHome;
+  document.getElementById('btn-again').textContent=L.btnAgain;
+  document.getElementById('btn-share-text').textContent=L.btnShare;
+  L.pipNames.forEach((n,i)=>document.getElementById('pip-n'+i).textContent=n);
+  const grid=document.getElementById('cat-grid');
+  grid.innerHTML='';
+  L.cats.forEach((name,i)=>{
+    const d=document.createElement('div');
+    d.className='cat-card cc-'+i;
+    d.onclick=()=>startCategory(i);
+    d.innerHTML='<span class="cc-emoji">'+CATS_META[i].emoji+'</span><span class="cc-name">'+name+'</span><span class="cc-sub">'+L.qCount+'</span>';
+    grid.appendChild(d);
+  });
+}
 
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+id).classList.add('active');}
 
 function startCategory(c){
-  queue=QS.filter(q=>q.cat===c);
-  cur=0;sessionScore=0;answered=false;
+  queue=QS[lang].filter(q=>q.cat===c);
+  cur=0;sessionScore=0;catScores=[0,0,0,0,0,0];answered=false;
   showQ();show('question');
 }
 function startAll(){
-  queue=[...QS].sort(()=>Math.random()-0.5);
-  cur=0;sessionScore=0;answered=false;
+  queue=[...QS[lang]].sort(()=>Math.random()-0.5);
+  cur=0;sessionScore=0;catScores=[0,0,0,0,0,0];answered=false;
   showQ();show('question');
 }
 function showQ(){
-  const q=queue[cur],cat=CATS[q.cat],total=queue.length;
+  const q=queue[cur],cat=CATS_META[q.cat],total=queue.length,L=LANGS[lang];
   document.getElementById('prog').style.width=Math.round(cur/total*100)+'%';
   const badge=document.getElementById('q-badge');
   badge.style.background=cat.badge;badge.style.color=cat.btext;
-  badge.innerHTML=cat.emoji+' '+cat.name+' &nbsp;·&nbsp; '+(cur+1)+' / '+total;
+  badge.innerHTML=cat.emoji+' '+L.cats[q.cat]+' &nbsp;·&nbsp; '+(cur+1)+' / '+total;
   document.getElementById('q-text').textContent=q.q;
+  document.getElementById('next-btn').textContent=L.btnNext;
   const opts=document.getElementById('opts');
   opts.innerHTML='';
   ['A','B','C','D'].forEach((l,i)=>{
@@ -395,33 +339,45 @@ function pick(chosen){
   if(ok){catScores[q.cat]++;sessionScore++;}
   document.getElementById('next-btn').style.display='block';
 }
-function nextQ(){
-  cur++;
-  if(cur>=queue.length)showEnd();
-  else showQ();
-}
+function nextQ(){cur++;if(cur>=queue.length)showEnd();else showQ();}
+
 function showEnd(){
-  const total=queue.length,pct=Math.round(sessionScore/total*100);
-  let trophy='🥑',title='¡Buen intento! Sigue aprendiendo';
-  if(pct===100){trophy='🏆';title='¡Perfecto! Eres un maestro del aguacate';}
-  else if(pct>=80){trophy='🥇';title='¡Excelente! Sabes mucho de aguacates';}
-  else if(pct>=60){trophy='🥈';title='¡Bien! Vas por buen camino';}
-  else if(pct>=40){trophy='🥉';title='No está mal, pero hay margen de mejora';}
+  const L=LANGS[lang],total=queue.length,pct=Math.round(sessionScore/total*100);
+  let trophy='🥑',title=L.titles[0];
+  if(pct===100){trophy='🏆';title=L.titles[100];}
+  else if(pct>=80){trophy='🥇';title=L.titles[80];}
+  else if(pct>=60){trophy='🥈';title=L.titles[60];}
+  else if(pct>=40){trophy='🥉';title=L.titles[40];}
+  lastTrophy=trophy;lastScore=sessionScore;lastTotal=total;lastPct=pct;
   document.getElementById('end-trophy').textContent=trophy;
   document.getElementById('end-title').textContent=title;
   document.getElementById('end-score').textContent=sessionScore+' / '+total;
-  document.getElementById('end-sub').textContent=pct+'% de respuestas correctas';
-  const cc={};queue.forEach(q=>cc[q.cat]=(cc[q.cat]||0)+1);
+  document.getElementById('end-sub').textContent=L.pct(pct);
+  document.getElementById('btn-again').textContent=L.btnAgain;
+  document.getElementById('btn-share-text').textContent=L.btnShare;
+
+  const catCount={};
+  queue.forEach(q=>catCount[q.cat]=(catCount[q.cat]||0)+1);
   const div=document.getElementById('end-cats');div.innerHTML='';
-  Object.keys(cc).forEach(ci=>{
-    const cat=CATS[ci],d=document.createElement('div');
+  Object.keys(catCount).forEach(ci=>{
+    const cat=CATS_META[ci],d=document.createElement('div');
     d.className='end-cat';d.style.background=cat.badge;
-    d.innerHTML='<div class="ec-emoji">'+cat.emoji+'</div><span class="ec-name" style="color:'+cat.btext+'">'+cat.name+'</span><span class="ec-score" style="color:'+cat.btext+'">'+catScores[ci]+'/'+cc[ci]+'</span>';
+    const score=Math.min(catScores[ci], catCount[ci]);
+    d.innerHTML='<div class="ec-emoji">'+cat.emoji+'</div><span class="ec-name" style="color:'+cat.btext+'">'+L.cats[ci]+'</span><span class="ec-score" style="color:'+cat.btext+'">'+score+'/'+catCount[ci]+'</span>';
     div.appendChild(d);
   });
   show('end');
 }
+
+function shareLinkedIn(){
+  const L=LANGS[lang];
+  const text=L.shareText(lastScore,lastTotal,lastPct,lastTrophy);
+  const url='https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(QUIZ_URL)+'&summary='+encodeURIComponent(text);
+  window.open(url,'_blank');
+}
+
 function goHome(){show('start');}
+renderStart();
 </script>
 </body>
 </html>
