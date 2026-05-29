@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trivial del Aguacate 🥑</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green-dark: #1a7a2e;
+  --green-mid: #2ea832;
+  --green-light: #e8f5e9;
+  --orange: #f5a623;
+  --coral: #e85d26;
+  --bg: #fafaf7;
+  --card: #ffffff;
+  --text: #1a1a1a;
+  --muted: #6b7280;
+  --border: rgba(0,0,0,0.08);
+  --radius: 16px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 16px 60px;
+}
+
+.container { width: 100%; max-width: 560px; }
+
+.hero {
+  text-align: center;
+  padding: 40px 0 32px;
+}
+.hero-emoji { font-size: 64px; line-height: 1; display: block; margin-bottom: 16px; animation: bounce 2s ease-in-out infinite; }
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: 38px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 50%, var(--orange) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+.hero p { font-size: 15px; color: var(--muted); }
+
+.scoreboard {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  margin-bottom: 24px;
+}
+.score-pip {
+  border-radius: 12px;
+  padding: 10px 4px 8px;
+  text-align: center;
+  border: 2px solid transparent;
+  transition: all 0.3s;
+}
+.score-pip .pip-emoji { font-size: 18px; display: block; }
+.score-pip .pip-name { font-size: 9px; font-weight: 600; display: block; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.04em; }
+.score-pip .pip-check { font-size: 14px; display: block; margin-top: 2px; min-height: 18px; }
+.score-pip.earned { border-width: 2px; transform: scale(1.05); }
+
+.pip-0 { background: #e8f5e9; } .pip-0 .pip-name { color: #1b5e20; }
+.pip-1 { background: #f3e5f5; } .pip-1 .pip-name { color: #4a148c; }
+.pip-2 { background: #fff3e0; } .pip-2 .pip-name { color: #e65100; }
+.pip-3 { background: #e0f2f1; } .pip-3 .pip-name { color: #004d40; }
+.pip-4 { background: #fce4ec; } .pip-4 .pip-name { color: #880e4f; }
+.pip-5 { background: #e3f2fd; } .pip-5 .pip-name { color: #0d47a1; }
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.cat-card {
+  border-radius: var(--radius);
+  padding: 20px 14px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.15s, box-shadow 0.15s;
+  text-align: center;
+}
+.cat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+.cat-card:active { transform: scale(0.97); }
+.cat-card .cc-emoji { font-size: 32px; display: block; margin-bottom: 8px; }
+.cat-card .cc-name { font-size: 14px; font-weight: 600; display: block; }
+.cat-card .cc-sub { font-size: 12px; display: block; margin-top: 3px; opacity: 0.7; }
+
+.cc-0 { background: #e8f5e9; } .cc-0 .cc-name { color: #1b5e20; }
+.cc-1 { background: #f3e5f5; } .cc-1 .cc-name { color: #4a148c; }
+.cc-2 { background: #fff3e0; } .cc-2 .cc-name { color: #e65100; }
+.cc-3 { background: #e0f2f1; } .cc-3 .cc-name { color: #004d40; }
+.cc-4 { background: #fce4ec; } .cc-4 .cc-name { color: #880e4f; }
+.cc-5 { background: #e3f2fd; } .cc-5 .cc-name { color: #0d47a1; }
+
+.btn-all {
+  width: 100%;
+  padding: 16px;
+  border-radius: var(--radius);
+  border: none;
+  background: linear-gradient(135deg, var(--green-dark), var(--green-mid), var(--orange));
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.15s;
+  margin-bottom: 8px;
+}
+.btn-all:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-all:active { transform: scale(0.98); }
+
+.progress-wrap {
+  height: 5px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 3px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--green-dark), var(--orange));
+  transition: width 0.4s ease;
+}
+
+.q-card {
+  background: var(--card);
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+}
+.q-top {
+  padding: 22px 22px 18px;
+}
+.q-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.q-text {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--text);
+}
+.opts { display: flex; flex-direction: column; gap: 8px; padding: 0 22px 20px; }
+.opt {
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--card);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.15s;
+}
+.opt:hover:not(:disabled) { background: #f5f5f0; border-color: rgba(0,0,0,0.2); }
+.opt:disabled { cursor: default; }
+.opt-letter {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #f0f0eb; border: 1px solid rgba(0,0,0,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 600; flex-shrink: 0;
+}
+.opt.correct { background: #e8f5e9; border-color: #2e7d32; color: #1b5e20; }
+.opt.correct .opt-letter { background: #2e7d32; color: white; border-color: #2e7d32; }
+.opt.wrong { background: #fce4ec; border-color: #c62828; color: #b71c1c; }
+.opt.wrong .opt-letter { background: #c62828; color: white; border-color: #c62828; }
+
+.feedback {
+  margin: 0 22px 16px;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  display: none;
+}
+.feedback.correct { background: #e8f5e9; color: #1b5e20; }
+.feedback.wrong { background: #fce4ec; color: #880e4f; }
+
+.nav {
+  display: flex;
+  gap: 10px;
+  padding: 0 22px 22px;
+}
+.btn-nav {
+  flex: 1; padding: 13px; border-radius: 12px;
+  border: 1.5px solid rgba(0,0,0,0.12);
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 500;
+  background: var(--card); color: var(--text);
+  transition: background 0.15s;
+}
+.btn-nav:hover { background: #f5f5f0; }
+.btn-nav.primary {
+  background: var(--green-dark); color: white;
+  border-color: var(--green-dark);
+}
+.btn-nav.primary:hover { background: #145722; }
+
+.end-screen {
+  text-align: center;
+  background: var(--card);
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  padding: 40px 24px 32px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+}
+.end-trophy { font-size: 64px; display: block; margin-bottom: 16px; animation: bounce 1.5s ease-in-out infinite; }
+.end-title { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 900; color: var(--text); margin-bottom: 8px; }
+.end-score { font-family: 'Fraunces', serif; font-size: 52px; font-weight: 900; background: linear-gradient(135deg, var(--green-dark), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.end-sub { font-size: 14px; color: var(--muted); margin-top: 6px; margin-bottom: 24px; }
+.end-cats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 24px; }
+.end-cat { border-radius: 12px; padding: 14px 8px; text-align: center; }
+.end-cat .ec-emoji { font-size: 24px; }
+.end-cat .ec-name { font-size: 11px; font-weight: 600; display: block; margin-top: 4px; }
+.end-cat .ec-score { font-size: 18px; font-weight: 700; display: block; margin-top: 2px; }
+
+.screen { display: none; }
+.screen.active { display: block; }
+
+footer {
+  text-align: center;
+  margin-top: 32px;
+  font-size: 12px;
+  color: var(--muted);
+}
+footer a { color: var(--green-mid); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div id="screen-start" class="screen active">
+  <div class="hero">
+    <span class="hero-emoji">🥑</span>
+    <h1>Trivial del Aguacate</h1>
+    <p>6 categorías · 18 preguntas · ¿Cuánto sabes realmente?</p>
+  </div>
+
+  <div class="scoreboard" id="scoreboard">
+    <div class="score-pip pip-0"><span class="pip-emoji">🔬</span><span class="pip-name">Bio</span><span class="pip-check" id="pip-0"></span></div>
+    <div class="score-pip pip-1"><span class="pip-emoji">📜</span><span class="pip-name">Hist</span><span class="pip-check" id="pip-1"></span></div>
+    <div class="score-pip pip-2"><span class="pip-emoji">💰</span><span class="pip-name">Eco</span><span class="pip-check" id="pip-2"></span></div>
+    <div class="score-pip pip-3"><span class="pip-emoji">🌿</span><span class="pip-name">Medio</span><span class="pip-check" id="pip-3"></span></div>
+    <div class="score-pip pip-4"><span class="pip-emoji">🍽️</span><span class="pip-name">Gastro</span><span class="pip-check" id="pip-4"></span></div>
+    <div class="score-pip pip-5"><span class="pip-emoji">💡</span><span class="pip-name">Curio</span><span class="pip-check" id="pip-5"></span></div>
+  </div>
+
+  <div class="cat-grid">
+    <div class="cat-card cc-0" onclick="startCategory(0)"><span class="cc-emoji">🔬</span><span class="cc-name">Biología</span><span class="cc-sub">3 preguntas</span></div>
+    <div class="cat-card cc-1" onclick="startCategory(1)"><span class="cc-emoji">📜</span><span class="cc-name">Historia</span><span class="cc-sub">3 preguntas</span></div>
+    <div class="cat-card cc-2" onclick="startCategory(2)"><span class="cc-emoji">💰</span><span class="cc-name">Economía</span><span class="cc-sub">3 preguntas</span></div>
+    <div class="cat-card cc-3" onclick="startCategory(3)"><span class="cc-emoji">🌿</span><span class="cc-name">Medio ambiente</span><span class="cc-sub">3 preguntas</span></div>
+    <div class="cat-card cc-4" onclick="startCategory(4)"><span class="cc-emoji">🍽️</span><span class="cc-name">Gastronomía</span><span class="cc-sub">3 preguntas</span></div>
+    <div class="cat-card cc-5" onclick="startCategory(5)"><span class="cc-emoji">💡</span><span class="cc-name">Curiosidades</span><span class="cc-sub">3 preguntas</span></div>
+  </div>
+  <button class="btn-all" onclick="startAll()">🥑 Jugar todo seguido — 18 preguntas</button>
+</div>
+
+<div id="screen-question" class="screen">
+  <div class="progress-wrap"><div class="progress-fill" id="prog"></div></div>
+  <div class="q-card">
+    <div class="q-top">
+      <div class="q-badge" id="q-badge"></div>
+      <div class="q-text" id="q-text"></div>
+    </div>
+    <div class="opts" id="opts"></div>
+    <div class="feedback" id="feedback"></div>
+    <div class="nav">
+      <button class="btn-nav" onclick="goHome()">← Inicio</button>
+      <button class="btn-nav primary" id="next-btn" onclick="nextQ()" style="display:none">Siguiente →</button>
+    </div>
+  </div>
+</div>
+
+<div id="screen-end" class="screen">
+  <div class="end-screen">
+    <span class="end-trophy" id="end-trophy">🏆</span>
+    <div class="end-title" id="end-title"></div>
+    <div class="end-score" id="end-score"></div>
+    <div class="end-sub" id="end-sub"></div>
+    <div class="end-cats" id="end-cats"></div>
+    <button class="btn-all" onclick="goHome()">Jugar de nuevo 🥑</button>
+  </div>
+</div>
+
+<footer>Hecho con 🥑 · Comparte en <a href="https://linkedin.com" target="_blank">LinkedIn</a></footer>
+
+</div>
+<script>
+const CATS=[
+  {name:"Biología",emoji:"🔬",badge:"#e8f5e9",btext:"#1b5e20"},
+  {name:"Historia",emoji:"📜",badge:"#f3e5f5",btext:"#4a148c"},
+  {name:"Economía",emoji:"💰",badge:"#fff3e0",btext:"#e65100"},
+  {name:"Medio amb.",emoji:"🌿",badge:"#e0f2f1",btext:"#004d40"},
+  {name:"Gastronomía",emoji:"🍽️",badge:"#fce4ec",btext:"#880e4f"},
+  {name:"Curiosidades",emoji:"💡",badge:"#e3f2fd",btext:"#0d47a1"}
+];
+const QS=[
+  {cat:0,q:"¿Qué enzimas se liberan al apretar un aguacate y causan las manchas marrones?",opts:["Polifenol oxidasas","Lipasas","Amilasas","Proteasas"],ans:0,exp:"Las polifenol oxidasas, normalmente separadas de sus sustratos, se liberan al romperse las células y causan la oxidación que genera manchas marrones."},
+  {cat:0,q:"¿Por qué el aguacate no madura mientras está en el árbol?",opts:["Falta de luz solar directa","El árbol produce una hormona inhibidora","La temperatura del árbol es muy baja","No tiene acceso al agua"],ans:1,exp:"El árbol produce una hormona que inhibe el proceso de maduración. Solo cuando se separa, el etileno interno toma el control."},
+  {cat:0,q:"¿Cuánto potasio contiene un aguacate mediano comparado con un plátano?",opts:["La misma cantidad","La mitad","El doble aproximadamente","Tres veces más"],ans:2,exp:"Un aguacate mediano tiene ~975 mg de potasio frente a los ~422 mg de un plátano. Casi el doble, aunque el plátano se lleva toda la fama."},
+  {cat:1,q:"¿Qué significa la palabra náhuatl 'āhuacatl' de donde viene 'aguacate'?",opts:["Fruto verde","Testículo","Mantequilla de árbol","Regalo de los dioses"],ans:1,exp:"Los aztecas llamaban al aguacate 'āhuacatl' que significa testículo, por su forma y porque cuelgan en pares del árbol."},
+  {cat:1,q:"¿Quién creó la variedad Hass que representa el 80% del aguacate mundial?",opts:["Un agrónomo californiano","Un cartero llamado Rudolph Hass","El gobierno mexicano","Una empresa agrícola israelí"],ans:1,exp:"Rudolph Hass era un cartero de California que en 1926 compró un árbol de semilla. Estuvo a punto de cortarlo, pero al probarlo descubrió su calidad excepcional."},
+  {cat:1,q:"¿Hace cuántos años se extinguieron los principales dispersores de semillas del aguacate?",opts:["Hace 1.000 años","Hace 5.000 años","Hace 13.000 años","Hace 50.000 años"],ans:2,exp:"Los mastodontes y mamuts que dispersaban sus semillas se extinguieron hace ~13.000 años. Sin los humanos que lo cultivaron, el aguacate habría desaparecido."},
+  {cat:2,q:"¿Qué estado mexicano produce el 80% de los aguacates que consume Estados Unidos?",opts:["Jalisco","Oaxaca","Michoacán","Veracruz"],ans:2,exp:"Michoacán es el corazón aguacatero de México y del mundo. También es territorio donde operan cárteles que extorsionan a agricultores del 'oro verde'."},
+  {cat:2,q:"¿En qué evento deportivo se consumen ~120 millones de aguacates en una semana en EE.UU.?",opts:["Los Juegos Olímpicos","El Super Bowl","La Copa del Mundo","El All-Star de la NBA"],ans:1,exp:"El Super Bowl es el mayor evento de consumo de aguacates en EE.UU., desde que la NFL levantó la prohibición de publicidad de aguacate en 1992."},
+  {cat:2,q:"¿Cuánto recibe el agricultor de Michoacán por cada aguacate?",opts:["0,30 - 0,50 dólares","1 - 1,50 dólares","2 - 3 dólares","Lo mismo que en Europa"],ans:0,exp:"El agricultor recibe entre 0,30 y 0,50 dólares por aguacate que en Europa se vende a 1,50-2,50 euros. La cadena de valor es brutalmente desigual."},
+  {cat:3,q:"¿Cuántos litros de agua se necesitan para producir un solo aguacate?",opts:["10 litros","70 litros","200 litros","500 litros"],ans:1,exp:"Un aguacate requiere ~70 litros de agua (hasta 320 según el método de riego). El problema es la concentración en regiones ya hídricamente estresadas."},
+  {cat:3,q:"¿Qué especie migratoria pierde su hábitat por la deforestación aguacatera en Michoacán?",opts:["El águila real","La mariposa monarca","El tucán","El quetzal"],ans:1,exp:"Los bosques de oyamel en Michoacán, destino de invernada de millones de mariposas monarca, están siendo talados para plantar aguacates."},
+  {cat:3,q:"¿Cuánto CO2 puede absorber al año un árbol de aguacate adulto?",opts:["1-2 kg","5-10 kg","20-30 kg","100 kg"],ans:2,exp:"Un árbol adulto absorbe entre 20 y 30 kg de CO2 al año, convirtiéndolo en un potencial aliado contra el cambio climático si se cultiva sosteniblemente."},
+  {cat:4,q:"¿Cuál es el punto de humo del aceite de aguacate refinado?",opts:["160°C","210°C","271°C","350°C"],ans:2,exp:"El aceite de aguacate aguanta hasta 271°C, el doble que el aceite de oliva virgen extra (~190°C). Ideal para frituras a alta temperatura."},
+  {cat:4,q:"Según la tradición mexicana auténtica, ¿qué ingrediente NO lleva el guacamole original?",opts:["Chile serrano","Cilantro","Tomate","Lima"],ans:2,exp:"El guacamole auténtico lleva aguacate, chile, cebolla, cilantro, sal y lima. El tomate es una adición posterior, posiblemente colonial."},
+  {cat:4,q:"¿Qué compuesto del aguacate maduro contribuye a su sabor umami?",opts:["Ácido cítrico","Ácido glutámico","Capsaicina","Taninos"],ans:1,exp:"El aguacate maduro contiene ácido glutámico, aportando umami. Combinado con el tomate y la sal, la intensidad del sabor se multiplica."},
+  {cat:5,q:"¿Cuántas variedades de aguacate existen documentadas en el mundo?",opts:["Unas 50","Unas 200","Más de 1.000","Más de 5.000"],ans:2,exp:"Existen más de 1.000 variedades documentadas, con sabores que van desde nuez hasta anís. La homogeneización hacia el Hass ha eliminado esta diversidad."},
+  {cat:5,q:"¿En qué país surgió el 'avocado toast' que se atribuye erróneamente a los millennials?",opts:["Estados Unidos","Reino Unido","Australia","México"],ans:2,exp:"El chef australiano Bill Granger lo incluía en su menú de Sydney desde los años 90. Lo que cambió en los 2010 fue la viralización en redes sociales."},
+  {cat:5,q:"¿Qué organización espacial incluye el aguacate en sus menús de misiones largas?",opts:["ESA europea","NASA","Agencia espacial china","Roscosmos"],ans:1,exp:"La NASA incluye preparaciones de aguacate por su alta densidad calórica, grasas esenciales y alta palatabilidad en condiciones de microgravedad."}
+];
+
+let queue=[],cur=0,answered=false,sessionScore=0,catScores=[0,0,0,0,0,0],catCounts=[0,0,0,0,0,0];
+
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+id).classList.add('active');}
+
+function startCategory(c){
+  queue=QS.filter(q=>q.cat===c);
+  cur=0;sessionScore=0;answered=false;
+  showQ();show('question');
+}
+function startAll(){
+  queue=[...QS].sort(()=>Math.random()-0.5);
+  cur=0;sessionScore=0;answered=false;
+  showQ();show('question');
+}
+function showQ(){
+  const q=queue[cur],cat=CATS[q.cat],total=queue.length;
+  document.getElementById('prog').style.width=Math.round(cur/total*100)+'%';
+  const badge=document.getElementById('q-badge');
+  badge.style.background=cat.badge;badge.style.color=cat.btext;
+  badge.innerHTML=cat.emoji+' '+cat.name+' &nbsp;·&nbsp; '+(cur+1)+' / '+total;
+  document.getElementById('q-text').textContent=q.q;
+  const opts=document.getElementById('opts');
+  opts.innerHTML='';
+  ['A','B','C','D'].forEach((l,i)=>{
+    const b=document.createElement('button');
+    b.className='opt';
+    b.innerHTML='<span class="opt-letter">'+l+'</span>'+q.opts[i];
+    b.onclick=()=>pick(i);
+    opts.appendChild(b);
+  });
+  document.getElementById('feedback').style.display='none';
+  document.getElementById('next-btn').style.display='none';
+  answered=false;
+}
+function pick(chosen){
+  if(answered)return;answered=true;
+  const q=queue[cur];
+  document.querySelectorAll('.opt').forEach((b,i)=>{
+    b.disabled=true;
+    if(i===q.ans)b.classList.add('correct');
+    else if(i===chosen&&chosen!==q.ans)b.classList.add('wrong');
+  });
+  const ok=chosen===q.ans;
+  const fb=document.getElementById('feedback');
+  fb.className='feedback '+(ok?'correct':'wrong');
+  fb.innerHTML=(ok?'✅ ':'❌ ')+q.exp;
+  fb.style.display='block';
+  if(ok){catScores[q.cat]++;sessionScore++;}
+  document.getElementById('next-btn').style.display='block';
+}
+function nextQ(){
+  cur++;
+  if(cur>=queue.length)showEnd();
+  else showQ();
+}
+function showEnd(){
+  const total=queue.length,pct=Math.round(sessionScore/total*100);
+  let trophy='🥑',title='¡Buen intento! Sigue aprendiendo';
+  if(pct===100){trophy='🏆';title='¡Perfecto! Eres un maestro del aguacate';}
+  else if(pct>=80){trophy='🥇';title='¡Excelente! Sabes mucho de aguacates';}
+  else if(pct>=60){trophy='🥈';title='¡Bien! Vas por buen camino';}
+  else if(pct>=40){trophy='🥉';title='No está mal, pero hay margen de mejora';}
+  document.getElementById('end-trophy').textContent=trophy;
+  document.getElementById('end-title').textContent=title;
+  document.getElementById('end-score').textContent=sessionScore+' / '+total;
+  document.getElementById('end-sub').textContent=pct+'% de respuestas correctas';
+  const cc={};queue.forEach(q=>cc[q.cat]=(cc[q.cat]||0)+1);
+  const div=document.getElementById('end-cats');div.innerHTML='';
+  Object.keys(cc).forEach(ci=>{
+    const cat=CATS[ci],d=document.createElement('div');
+    d.className='end-cat';d.style.background=cat.badge;
+    d.innerHTML='<div class="ec-emoji">'+cat.emoji+'</div><span class="ec-name" style="color:'+cat.btext+'">'+cat.name+'</span><span class="ec-score" style="color:'+cat.btext+'">'+catScores[ci]+'/'+cc[ci]+'</span>';
+    div.appendChild(d);
+  });
+  show('end');
+}
+function goHome(){show('start');}
+</script>
+</body>
+</html>
